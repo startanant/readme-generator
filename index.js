@@ -12,6 +12,9 @@ async function main(){
     // get the user info
     const gitName = userRequest.username;
     console.log(gitName);
+    const apiGitUrl = `https://api.github.com/users/${gitName}`;
+    const userResponse = await axios.get( apiGitUrl );
+    console.log(userResponse.data);
 }
 
 main();
