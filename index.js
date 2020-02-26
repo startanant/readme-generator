@@ -17,7 +17,7 @@ async function main(){
     const apiGitUrl = `https://api.github.com/users/${gitName}`;
     try {
         const userResponse = await axios.get( apiGitUrl );
-        //console.log(userResponse.data);
+        console.log(userResponse.data);
         const email = userResponse.data.email;
         const image = userResponse.data.avatar_url;
         const githubURL = userResponse.data.html_url;
@@ -36,19 +36,40 @@ async function main(){
             },
             {
                 type: "input",
+                message: "Installation: ",
+                name: "installation"
+            },
+            {
+                type: "input",
+                message: "Usage: ",
+                name: "usage"
+            },
+            {
+                type: "list",
                 message: "License: ",
-                name: "license"
+                name: "license",
+                choices: [
+                    "GNU",
+                    "BSD",
+                    "MIT"
+                ]
             }
         ]);
 
         const projectTitle = projectRequest.title;
         const projectDescription = projectRequest.description;
         const license = projectRequest.license;
+        const installation = projectRequest.installation;
+        const usage = projectRequest.usage;
         //console.log(projectTitle + projectDescription + license);
         
         //Build markdown output
         const output = (`# ${projectTitle}
         \n ${projectDescription}
+        \n## Installation
+        \n ${installation}
+        \n## Usage
+        \n ${usage}
         \n## License
         \n Licensed under ${license} license.
         \n## Author
@@ -62,7 +83,8 @@ async function main(){
 
 
     } catch (error) {
-        console.error(error.response.status + ' ' + error.response.statusText + '. Try again.');
+        //console.error(error.response.status + ' ' + error.response.statusText + '. Try again.');
+        console.error(error);
     }
     
     
